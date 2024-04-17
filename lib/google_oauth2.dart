@@ -3,6 +3,4 @@
 /// More dartdocs go here.
 library;
 
-export 'src/google_oauth2_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/get_token.dart';
