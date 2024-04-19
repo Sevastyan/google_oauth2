@@ -1,15 +1,28 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/pointycastle.dart';
 
+/// Returns bearer authorization token for Google APIs.
 ///
+/// [serviceAccountJson] - JSON file with service account credentials.
 ///
 /// [scopes] - collection of OAuth 2.0 scopes as defined by Google APIs:
 /// https://developers.google.com/identity/protocols/oauth2/scopes
-Future<String> getToken(String serviceAccountJson, Iterable<String> scopes) async {
-  final Map<String, dynamic> credentials = jsonDecode(serviceAccountJson.replaceAll('\n', '\\n'));
+Future<String> getToken({
+  required File serviceAccountJson,
+  required Iterable<String> scopes,
+}) async {
+  final fileLines = await serviceAccountJson.readAsLines();
+
+  final fileContentString = fileLines
+      .join()
+      // properly escapes new line characters in private_key property, so that the file could be parsed as JSON.
+      .replaceAll('\n', '\\n');
+
+  final Map<String, dynamic> credentials = jsonDecode(fileContentString);
 
   final privateKeyBase64 = (credentials['private_key'] as String)
       .split('\n')
@@ -76,7 +89,8 @@ String _base64url(Map<String, dynamic> json) {
   return base64UrlEncode(jsonUtf8);
 }
 
-// Shamefully copied from https://github.com/Ephenodrom/Dart-Basic-Utils/blob/45ed0a3087b2051004f17b39eb5289874b9c0390/lib/src/CryptoUtils.dart#L430
+// Shamefully copied from
+// https://github.com/Ephenodrom/Dart-Basic-Utils/blob/45ed0a3087b2051004f17b39eb5289874b9c0390/lib/src/CryptoUtils.dart#L430
 RSAPrivateKey _rsaPrivateKeyFromDERBytes(Uint8List bytes) {
   var asn1Parser = ASN1Parser(bytes);
   var topLevelSeq = asn1Parser.nextObject() as ASN1Sequence;
