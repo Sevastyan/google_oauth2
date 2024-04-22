@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:google_oauth2/src/data/parse_file_as_json.dart';
 import 'package:http/http.dart';
 import 'package:pointycastle/pointycastle.dart';
 
@@ -15,7 +16,7 @@ Future<String> getToken({
   required File serviceAccountJsonFile,
   required Iterable<String> scopes,
 }) async {
-  final credentials = await _readAsJson(serviceAccountJsonFile);
+  final credentials = await parseFileAsJson(serviceAccountJsonFile);
 
   final issuer = credentials['client_email'];
   final issuedAt = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -33,17 +34,6 @@ Future<String> getToken({
   );
 
   return _getAccessToken(jwt: jwt);
-}
-
-Future<Map<String, dynamic>> _readAsJson(File serviceAccountJson) async {
-  final fileLines = await serviceAccountJson.readAsLines();
-
-  final fileContentString = fileLines
-      .join()
-      // properly escapes new line characters in private_key property, so that the file could be parsed as JSON.
-      .replaceAll('\n', '\\n');
-
-  return jsonDecode(fileContentString);
 }
 
 String _generateJsonWebToken({
