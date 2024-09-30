@@ -18,6 +18,13 @@ Future<String> getToken({
 }) async {
   final credentials = await parseFileAsJson(serviceAccountJsonFile);
 
+  return getTokenByCredentials(credentials: credentials, scopes: scopes);
+}
+
+Future<String> getTokenByCredentials({
+  required Map<String, dynamic> credentials,
+  required Iterable<String> scopes,
+}) async {
   final issuer = credentials['client_email'];
   final issuedAt = DateTime.now().millisecondsSinceEpoch ~/ 1000;
   final expirationAt = issuedAt + 3600;
