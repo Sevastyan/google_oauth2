@@ -134,6 +134,10 @@ typedef ScopesToTokenGenerator = TokenGenerator Function(
 /// of the token.
 typedef TokenGenerator = Future<String> Function(DateTime now);
 
+extension TokenGeneratorExtension on TokenGenerator {
+  Future<String> generate() => this(DateTime.now());
+}
+
 typedef _NowToScopesToClaim = _ScopesToClaim Function(DateTime now);
 typedef _ScopesToClaim = Map<String, dynamic> Function(Iterable<String> scopes);
 typedef _ClaimToJwt = String Function(Map<String, dynamic> claimData);
