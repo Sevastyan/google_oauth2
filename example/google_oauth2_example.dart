@@ -13,6 +13,7 @@ Future<void> main() async {
     'https://www.googleapis.com/auth/firebase.messaging',
   ];
 
+  // If you are on the Web, [genTokenFromJson] is also available.
   final scopesToTokenGenerator = genTokenFromJsonFile(file);
   final tokenGenerator = scopesToTokenGenerator(scopes);
 
