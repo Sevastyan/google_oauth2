@@ -3,4 +3,4 @@
 /// More dartdocs go here.
 library;
 
-export 'src/get_token.dart';
+export 'src/generate_token.dart';
