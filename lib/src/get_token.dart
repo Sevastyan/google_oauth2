@@ -10,7 +10,7 @@ import 'package:pointycastle/pointycastle.dart';
 ///
 /// [json] - a JSON date structure containing the service account
 /// credentials, as provided by Google.
-ScopesToNowToToken genTokenFromJson(Map<String, dynamic> json) =>
+ScopesToTokenGenerator genTokenFromJson(Map<String, dynamic> json) =>
     (scopes) => (now) => _createClaim(json)(now)(scopes)
         .let(_claimToJwt(_parsePrivateKey(json)))
         .let(_jwtToToken);
@@ -114,13 +114,15 @@ const _audience = 'https://www.googleapis.com/oauth2/v4/token';
 ///
 /// [scopes] - collection of OAuth 2.0 scopes as defined by Google APIs:
 /// https://developers.google.com/identity/protocols/oauth2/scopes
-typedef ScopesToNowToToken = NowToToken Function(Iterable<String> scopes);
+typedef ScopesToTokenGenerator = TokenGenerator Function(
+  Iterable<String> scopes,
+);
 
 /// Given time of a claim, returns a Bearer authorization token for Google APIs.
 ///
 /// [now] - time of claim issuing. Pass current time for the longest lifetime
 /// of the token.
-typedef NowToToken = Future<String> Function(DateTime now);
+typedef TokenGenerator = Future<String> Function(DateTime now);
 
 typedef _NowToScopesToClaim = _ScopesToClaim Function(DateTime now);
 typedef _ScopesToClaim = Map<String, dynamic> Function(Iterable<String> scopes);
