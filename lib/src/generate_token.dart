@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:google_oauth2/src/data/parse_file_as_json.dart';
 import 'package:http/http.dart';
 import 'package:pointycastle/pointycastle.dart';
 
@@ -16,14 +14,6 @@ ScopesToTokenGenerator genTokenFromJson(Map<String, dynamic> json) =>
     (scopes) => (now) => _createClaim(json)(now)(scopes)
         .let(_claimToJwt(_parsePrivateKey(json)))
         .let(_jwtToToken);
-
-/// Given service account credentials, returns a function to generate a
-/// Bearer authorization token for accessing Google
-/// APIs.
-///
-/// [file] - a service account JSON file, as provided by Google.
-ScopesToTokenGenerator genTokenFromJsonFile(File file) => (scopes) => (now) =>
-    parseFileAsJson(file).then((json) => genTokenFromJson(json)(scopes)(now));
 
 _NowToScopesToClaim _createClaim(Map<String, dynamic> json) =>
     (now) => (scopes) {

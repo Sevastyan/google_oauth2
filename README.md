@@ -7,9 +7,8 @@ The package provides a flexible, extensible interface through generator
 functions:
 
 ```dart
+final Map<String, dynamic> json = {/*content of google-services.json*/};
 final scopesToTokenGenerator = genTokenFromJson(json);
-/* or
-final scopesToTokenGenerator = genTokenFromJsonFile(file); */
 
 final scopes = [
     'https://www.googleapis.com/auth/cloud-platform',

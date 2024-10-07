@@ -1,3 +1,7 @@
+# 1.0.3
+
+Remove dependency on dart:io.
+
 # 1.0.2
 
 Remove cover image.
