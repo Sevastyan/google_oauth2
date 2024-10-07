@@ -1,9 +1,7 @@
 A Dart library for generating OAuth 2.0 access tokens for Google APIs based on
 JSON service account credentials.
 
-<div style="text-align: center;">
-  <img src="cover_image.png" style="width: 400px;">
-</div>
+![Cover image](cover_image.png)
 
 ## Usage
 
