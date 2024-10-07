@@ -1,3 +1,7 @@
+# 1.0.4
+
+Add example.
+
 # 1.0.3
 
 Remove dependency on dart:io.

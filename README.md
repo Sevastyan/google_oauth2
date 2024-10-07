@@ -8,15 +8,12 @@ functions:
 
 ```dart
 final Map<String, dynamic> json = {/*content of google-services.json*/};
-final scopesToTokenGenerator = genTokenFromJson(json);
-
 final scopes = [
-    'https://www.googleapis.com/auth/cloud-platform',
-    'https://www.googleapis.com/auth/firebase.messaging',
+  'https://www.googleapis.com/auth/cloud-platform',
+  'https://www.googleapis.com/auth/firebase.messaging',
 ];
-
+final scopesToTokenGenerator = genTokenFromJson(json);
 final tokenGenerator = scopesToTokenGenerator(scopes);
-
 final accessToken = await tokenGenerator.generate();
 ```
 
