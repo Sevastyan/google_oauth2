@@ -1,8 +1,6 @@
 A Dart library for generating OAuth 2.0 access tokens for Google APIs based on
 JSON service account credentials.
 
-![Cover image](cover_image.png)
-
 ## Usage
 
 The package provides a flexible, extensible interface through generator

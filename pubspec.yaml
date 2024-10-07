@@ -1,5 +1,5 @@
 name: google_oauth2
-version: 1.0.1
+version: 1.0.2
 description: A Dart library for generating OAuth 2.0 access tokens for Google
   APIs using JSON service account credentials.
 repository: https://github.com/Sevastyan/google_oauth2
